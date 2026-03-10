@@ -340,9 +340,177 @@ Program Termination
 
 ---
 
-## UC3: Support Optional Argument Handling
+## UC3: Display "Hello" with Command-Line Argument or Default Message
 
-*To be implemented in future iterations*
+### Description
+
+The app accepts a user's name as a command-line argument and displays a personalized greeting. If no name is provided, it defaults to "World". This use case combines the basic functionality from UC1 with the personalization from UC2, adding robustness through default handling.
+
+### Disadvantages of Previous Use Case
+
+UC2 requires a command-line argument to work correctly. If the user runs the program without providing an argument, the application will crash with an ArrayIndexOutOfBoundsException. This makes the program fragile and less user-friendly. UC3 addresses this limitation by providing a sensible default value when no argument is supplied.
+
+### Preconditions
+
+- App is launched with or without a command-line argument
+- Java Runtime Environment (JRE) is installed
+
+### Main Flow
+
+**Scenario 1: With Command-Line Argument**
+1. User runs the application with a name argument: `java HelloApp John`
+2. App checks if a command-line argument was provided
+3. Since an argument exists, app reads the name from args[0]
+4. App displays "Hello, John!" to the console
+5. App terminates
+
+**Scenario 2: Without Command-Line Argument**
+1. User runs the application without arguments: `java HelloApp`
+2. App checks if a command-line argument was provided
+3. Since no argument exists, app uses the default value "World"
+4. App displays "Hello, World!" to the console
+5. App terminates
+
+### Postconditions
+
+- Personalized greeting is displayed with either the provided name or the default "World"
+- Application terminates successfully in both scenarios
+
+### Hints for Implementing UC3
+
+- Check the length of the args array before accessing elements
+- Use a ternary operator or if-else statement to assign the name based on argument availability
+- The args.length property determines how many arguments were passed
+- Test with and without command-line arguments to ensure both paths work correctly
+
+### Code Snippet
+
+```java
+public class HelloApp {
+    public static void main(String[] args) {
+        // Use ternary operator to assign name based on argument availability
+        String name = (args.length > 0) ? args[0] : "World";
+
+        // Display the personalized greeting
+        System.out.println("Hello, " + name + "!");
+    }
+}
+```
+
+### Compilation and Execution
+
+#### Using Java directly:
+```bash
+javac HelloApp.java
+
+# With command-line argument
+java HelloApp Alice
+
+# Without command-line argument
+java HelloApp
+```
+
+#### Using Maven:
+```bash
+mvn compile
+
+# With command-line argument
+mvn exec:java -Dexec.mainClass="HelloApp" -Dexec.args="Alice"
+
+# Without command-line argument
+mvn exec:java -Dexec.mainClass="HelloApp"
+```
+
+### Example Output
+
+**Input**: `java HelloApp Alice`
+**Output**:
+```
+Hello, Alice!
+```
+
+**Input**: `java HelloApp`
+**Output**:
+```
+Hello, World!
+```
+
+### Concepts Learned
+
+#### Conditional Logic
+
+- **Definition**: Using if-else statements to execute different code paths based on argument availability
+- **Purpose**: Ensures the program handles multiple scenarios gracefully
+- **Application**: Check if the args array has any elements before accessing them
+- **Benefit**: Allows the program to function correctly regardless of user input
+
+#### Ternary Operator
+
+- **Syntax**: `condition ? valueIfTrue : valueIfFalse`
+- **Purpose**: Provides a concise way to assign values based on a condition
+- **Components**:
+  - **condition**: Boolean expression (e.g., `args.length > 0`)
+  - **valueIfTrue**: Value assigned if condition is true (e.g., `args[0]`)
+  - **valueIfFalse**: Value assigned if condition is false (e.g., `"World"`)
+- **Example**: `String name = (args.length > 0) ? args[0] : "World";`
+- **Advantage**: More concise than if-else for simple assignments
+
+#### Operator Precedence
+
+- **Importance**: Understanding operator precedence is crucial for correct code
+- **Application**: Use parentheses to explicitly define order of operations
+- **Example**: Parentheses in `(args.length > 0) ? args[0] : "World"` ensure correct evaluation
+
+#### Array Length Checking
+
+- **Method**: Always validate `args.length` before accessing array elements
+- **Purpose**: Prevent runtime exceptions like ArrayIndexOutOfBoundsException
+- **Pattern**: Check `if (args.length > 0)` before accessing `args[0]`
+- **Best Practice**: Defensive programming to make applications robust
+
+#### Default Values
+
+- **Purpose**: Providing fallback values when expected input is missing
+- **Benefit**: Improves user experience by preventing application failure
+- **Pattern**: Use ternary operator or if-else to assign defaults
+
+#### Defensive Programming
+
+- **Definition**: Writing code that anticipates and handles edge cases
+- **Application**: Handle missing command-line arguments gracefully
+- **Techniques**: Input validation, default values, error prevention
+- **Benefit**: Makes applications more robust and reliable
+
+#### String Concatenation
+
+- **Method**: Combining multiple strings using the + operator
+- **Purpose**: Create dynamic output based on user input
+- **Example**: `"Hello, " + name + "!"` creates personalized messages
+- **Flexibility**: Allows for customizable and reusable messaging
+
+#### Operator Overloading
+
+- **Concept**: The + operator behaves differently based on operand types
+- **String Context**: When used with strings, + performs concatenation
+- **Numeric Context**: When used with numbers, + performs addition
+- **Java Feature**: This flexibility simplifies string manipulation
+
+#### Program Flexibility
+
+- **Design Principle**: Programs should work with optional inputs
+- **Implementation**: Allow running with or without command-line arguments
+- **User Experience**: Accommodate different user preferences and scenarios
+- **Versatility**: Makes applications more user-friendly and adaptable
+
+### Key Takeaways
+
+1. **Ternary Operator**: Concise alternative to if-else for simple conditional assignments
+2. **Array Bounds Checking**: Always validate array length before access
+3. **Default Values**: Essential for robust, user-friendly applications
+4. **Defensive Programming**: Anticipate edge cases and handle them gracefully
+5. **Operator Precedence**: Use parentheses to ensure correct evaluation order
+6. **String Concatenation**: Flexible way to build dynamic messages
+7. **Program Flexibility**: Design for optional inputs improves usability
 
 ---
 
