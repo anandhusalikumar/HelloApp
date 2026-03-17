@@ -514,9 +514,196 @@ Hello, World!
 
 ---
 
-## UC4: Handle Multiple Command-Line Names
+## UC4: Display "Hello" with Multiple Command-Line Arguments or Default Message
 
-*To be implemented in future iterations*
+### Description
+
+The app accepts multiple names as command-line arguments and displays a personalized greeting for all names. If no names are provided, it defaults to "World". This use case extends the functionality of UC3 by allowing for multiple inputs and demonstrating how to handle arrays of arguments efficiently.
+
+### Disadvantages of Previous Use Case
+
+UC3 only accepts a single command-line argument. If a user wants to greet multiple people, they would need to run the program multiple times. This is inefficient and doesn't reflect real-world scenarios where you might want to greet several people in one execution. UC4 addresses this by allowing multiple names to be passed as arguments in a single run.
+
+### Preconditions
+
+- App is launched with zero or more command-line arguments
+- Java Runtime Environment (JRE) is installed
+
+### Main Flow
+
+**Scenario 1: With Multiple Command-Line Arguments**
+1. User runs the application with multiple names: `java HelloApp Alice Bob Charlie`
+2. App checks if command-line arguments were provided
+3. Since arguments exist, app reads all names from the args array
+4. App joins all names with commas and spaces using String.join()
+5. App displays "Hello, Alice, Bob, Charlie!" to the console
+6. App terminates
+
+**Scenario 2: With Single Command-Line Argument**
+1. User runs the application with one name: `java HelloApp John`
+2. App checks if command-line arguments were provided
+3. Since an argument exists, app reads the name from the args array
+4. App displays "Hello, John!" to the console
+5. App terminates
+
+**Scenario 3: Without Command-Line Arguments**
+1. User runs the application without arguments: `java HelloApp`
+2. App checks if command-line arguments were provided
+3. Since no arguments exist, app uses the default value "World"
+4. App displays "Hello, World!" to the console
+5. App terminates
+
+### Postconditions
+
+- Personalized greeting is displayed with all provided names separated by commas
+- Or defaults to "Hello, World!" if no arguments provided
+- Application terminates successfully in all scenarios
+
+### Hints for Implementing UC4
+
+- Use a loop to iterate through the args array to collect all names
+- The String.join() method efficiently combines multiple strings with a delimiter
+- Check args.length to determine if arguments were provided
+- A single greeting should include all names, not separate greetings for each name
+- Test with various numbers of arguments (0, 1, 2, 3+) to ensure correctness
+
+### Code Snippet
+
+```java
+public class HelloApp {
+    public static void main(String[] args) {
+        // Use String.join() to efficiently combine all names with ", " delimiter
+        // If no arguments provided, use "World" as default
+        String names = (args.length > 0) ? String.join(", ", args) : "World";
+
+        // Display the personalized greeting with all names
+        System.out.println("Hello, " + names + "!");
+    }
+}
+```
+
+### Compilation and Execution
+
+#### Using Java directly:
+```bash
+javac HelloApp.java
+
+# With multiple names
+java HelloApp Alice Bob Charlie
+
+# With single name
+java HelloApp John
+
+# Without arguments
+java HelloApp
+```
+
+#### Using Maven:
+```bash
+mvn compile
+
+# With multiple names
+mvn exec:java -Dexec.mainClass="HelloApp" -Dexec.args="Alice Bob Charlie"
+
+# With single name
+mvn exec:java -Dexec.mainClass="HelloApp" -Dexec.args="John"
+
+# Without arguments
+mvn exec:java -Dexec.mainClass="HelloApp"
+```
+
+### Example Output
+
+**Input**: `java HelloApp Alice Bob Charlie`
+**Output**:
+```
+Hello, Alice, Bob, Charlie!
+```
+
+**Input**: `java HelloApp John`
+**Output**:
+```
+Hello, John!
+```
+
+**Input**: `java HelloApp`
+**Output**:
+```
+Hello, World!
+```
+
+### Concepts Learned
+
+#### Array Handling
+
+- **Definition**: Working with arrays of command-line arguments and processing them effectively
+- **Purpose**: Crucial for handling multiple inputs in a Java application
+- **Application**: Access the args array to read all provided names and construct a personalized greeting
+- **Process**: Iterating through array, collecting names, combining them into output
+
+#### String.join() Method
+
+- **Syntax**: `String.join(delimiter, array)`
+- **Purpose**: Efficiently combines multiple strings with a specified delimiter
+- **Components**:
+  - **delimiter**: The string to use between elements (e.g., ", ")
+  - **array**: The array or iterable of strings to join
+- **Advantage**: More efficient than StringBuilder for simple joining operations
+- **Example**: `String.join(", ", "Alice", "Bob", "Charlie")` produces "Alice, Bob, Charlie"
+
+#### For Loop and Array Iteration
+
+- **Purpose**: Iterate through the args array to access each element by index
+- **Syntax**: `for(int i = 0; i < args.length; i++)`
+- **Application**: Access each element based on position in the array
+- **Alternative**: Can use String.join() to avoid manual looping for simple cases
+
+#### StringBuilder for Dynamic String Building
+
+- **Purpose**: Efficiently build strings when concatenating multiple parts in a loop
+- **Advantage**: Avoids creating multiple immutable string objects
+- **Process**: Append to same object, then convert to string at end
+- **Performance**: More efficient than using + operator repeatedly in loops
+
+#### String Concatenation with Multiple Elements
+
+- **Method**: Combining processed names into a single message
+- **Syntax**: `"Hello, " + names + "!"`
+- **Benefit**: Creates flexible and reusable messaging for dynamic content
+
+#### Array vs Individual Elements
+
+- **Single Element**: UC3 processed just args[0]
+- **Multiple Elements**: UC4 processes all elements in args array
+- **Scaling**: Demonstrates how to scale from single-element to multiple-element processing
+
+#### Conditional Logic with Multiple Arguments
+
+- **Previous Approach**: Check `args.length > 0` to use array or default
+- **Extended Application**: Same conditional logic works for any number of arguments
+- **Flexibility**: Handles 0, 1, 2, or more arguments uniformly
+
+#### User Experience Improvement
+
+- **Benefit**: Supporting multiple names in single execution is more practical
+- **Usability**: Users no longer need multiple program runs for multiple greetings
+- **Enhancement**: Small functional improvements significantly improve user experience
+
+#### Delimiter-Based Joining
+
+- **Concept**: Using consistent separators (", ") between elements
+- **Purpose**: Creates readable, formatted output
+- **Pattern**: Common in data processing and report generation
+
+### Key Takeaways
+
+1. **String.join()**: Efficient method for combining multiple strings with a delimiter
+2. **Array Processing**: Process entire arrays rather than single elements for scalability
+3. **Default Handling**: Still apply default logic when no arguments provided
+4. **User Experience**: Support practical scenarios requiring multiple inputs
+5. **Code Elegance**: Ternary operator + String.join() = concise, readable code
+6. **Scalability**: Same code structure handles 1, 2, 3, or more arguments
+7. **Consistency**: Maintain single greeting output rather than multiple greetings
 
 ---
 
